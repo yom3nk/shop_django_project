@@ -7,5 +7,15 @@
 </head>
 <body>
     <h1>Strona Główna</h1>
+    
+    {% if user.is_authenticated %}
+        <span>Zalogowany jako: {{ user.username }}</span>
+        <span>Rola: {% if user.is_superuser %}Admin{% else %}Użytkownik{% endif %}</span>
+        <a href="/logout">Wyloguj</a>
+    {% else %}
+        <span>Nie jesteś zalogowany.</span>
+        <a href="/login">Zaloguj</a>
+        <a href="/register">Zarejestruj się</a>
+    {% endif %}
 </body>
 </html>
