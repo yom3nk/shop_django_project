@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from .models import Category, Product
 
 class CustomUserCreationForm(UserCreationForm):   
     class Meta:
@@ -16,3 +17,15 @@ class CustomUserCreationForm(UserCreationForm):
         self.fields['username'].label = 'Nazwa użytkownika'
         self.fields['password1'].label = 'Hasło'
         self.fields['password2'].label = 'Potwierdź hasło'
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ['name']
+
+class ProductForm(forms.ModelForm):
+    category = forms.ModelChoiceField(queryset=Category.objects.all())
+    
+    class Meta:
+        model = Product
+        fields = ['category', 'name', 'description', 'price', 'image']

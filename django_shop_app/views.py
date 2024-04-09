@@ -1,9 +1,28 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CategoryForm, ProductForm
+from .models import Product, Category
 
 def index(request):
-    return render(request, 'django_shop_app/index.html')
+    categories = Category.objects.all()
+    latest_products = Product.objects.order_by('-id')[:4]
+    category_id = request.GET.get('category')
+    
+    if category_id:
+        category_products = Product.objects.filter(category_id=category_id)
+        context = {
+            'categories': categories,
+            'products': category_products,
+            'on_home_page': False,
+        }
+    else:
+        context = {
+            'categories': categories,
+            'products': latest_products,
+            'on_home_page': True,
+        }
+
+    return render(request, 'django_shop_app/index.html', context)
 
 def login_view(request):
     if request.method == 'POST':
@@ -28,3 +47,23 @@ def register_view(request):
 def custom_logout(request):
     logout(request)
     return redirect('django_shop_app:index')
+
+def add_category(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('django_shop_app:index')
+    else:
+        form = CategoryForm()
+    return render(request, 'django_shop_app/add_category.html', {'form': form})
+
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('django_shop_app:index')
+    else:
+        form = ProductForm()
+    return render(request, 'django_shop_app/add_product.html', {'form': form})
