@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Strona Główna{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static '/django_shop_app/index.css' %}">
+</head>
+<body>
+    <header>
+        <div class="main-header">
+            <div class="header-logo">
+                <a href="/">
+                    <img src="{% static '/django_shop_app/logo.png' %}" alt="">
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul class="category-list">
+                    {% for category in categories %}
+                        <li><a href="/c/{{ category.id }}">{{ category.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </nav>
+            <div class="header-content">
+                <div class="header-icons">
+                    <a href="#" class="search-icon"><img src="{% static '/django_shop_app/search.png' %}" alt="Wyszukiwarka"></a>
+                    <a href="#" class="cart-icon"><img src="{% static '/django_shop_app/shopping-cart.png' %}" alt="Koszyk"></a>
+                    {% if user.is_authenticated and user.is_superuser %}
+                    <a href="#" class="admin-icon"><img src="{% static '/django_shop_app/admin.png' %}" alt="Admin"></a>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                        <a href="/logout" class="user-icon"><img src="{% static '/django_shop_app/logout.png' %}" alt="Wyloguj"></a>
+                    {% else %}
+                        <a href="/login" class="user-icon"><img src="{% static '/django_shop_app/login.png' %}" alt="Zaloguj"></a>
+                    {% endif %}
+                </div>
+                {% if user.is_authenticated %}
+                    <div class="user-info">
+                        <span>Zalogowany jako:</span>
+                        <span>{{ user.username }}</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+    
+       
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <div class="admin-links">
+        {% if user.is_superuser %}
+            <a href="/add_product">Dodaj nowy produkt</a>
+            <a href="/add_category">Dodaj nową kategorię</a>
+        {% endif %}
+    </div>
+</body>
+</html>

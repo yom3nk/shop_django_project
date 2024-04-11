@@ -1,65 +1,30 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strona Główna</title>
-    <link rel="stylesheet" type="text/css" href="{% static '/django_shop_app/index.css' %}">
-</head>
-<body>
-    <header>
-        <h1>Witaj{% if user.is_authenticated %}, {{ user.username }}{% endif %}!</h1>
-        <div class="login-links">
-            {% if user.is_authenticated %}
-                <a href="/logout">Wyloguj</a>
-            {% else %}
-                <a href="/login">Zaloguj</a>
-                <a href="/register">Zarejestruj się</a>
-            {% endif %}
-        </div>
-    </header>
+{% extends 'django_shop_app/base.html' %}
 
-    <nav class="navbar">
-        <div class="container">
-            <ul class="category-list">
-                {% for category in categories %}
-                    <li><a href="/?category={{ category.id }}">{{ category.name }}</a></li>
-                {% endfor %}
-            </ul>
-        </div>
-    </nav>
+{% block title %}
+Strona Główna
+{% endblock %}
 
-    <div class="container">
-        <div class="products">
-            {% if on_home_page %}
-                <h2>Najnowsze produkty</h2>
-            {% endif %}
-            <div class="product-grid">
-                {% if products %}
-                    {% for product in products %}
-                        <div class="product-item">
-                            <a href="/?product={{ product.id }}">
-                                <img src="{{ product.image.url }}" alt="{{ product.name }} thumbnail">
-                                <div class="product-details">
-                                    <p>{{ product.name }}</p>
-                                    <p>{{ product.price }} PLN</p>
-                                </div>
-                            </a>
-                        </div>
-                    {% endfor %}
-                {% else %}
-                    <p>Brak produktów</p>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-
-    <div class="admin-links">
-        {% if user.is_superuser %}
-            <a href="/add_product">Dodaj nowy produkt</a>
-            <a href="/add_category">Dodaj nową kategorię</a>
+{% block content %}
+    <div class="products">
+        {% if on_home_page %}
+            <h2>Najnowsze produkty</h2>
         {% endif %}
+        <div class="product-grid">
+            {% if products %}
+                {% for product in products %}
+                    <div class="product-item">
+                        <a href="/p/{{ product.id }}">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }} thumbnail">
+                            <div class="product-details">
+                                <p>{{ product.name }}</p>
+                                <p>{{ product.price }} PLN</p>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Brak produktów</p>
+            {% endif %}
+        </div>
     </div>
-</body>
-</html>
+{% endblock %}

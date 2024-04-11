@@ -5,22 +5,13 @@ from .models import Product, Category
 
 def index(request):
     categories = Category.objects.all()
-    latest_products = Product.objects.order_by('-id')[:4]
-    category_id = request.GET.get('category')
+    latest_products = Product.objects.order_by('-id')[:3]
     
-    if category_id:
-        category_products = Product.objects.filter(category_id=category_id)
-        context = {
-            'categories': categories,
-            'products': category_products,
-            'on_home_page': False,
-        }
-    else:
-        context = {
-            'categories': categories,
-            'products': latest_products,
-            'on_home_page': True,
-        }
+    context = {
+        'categories': categories,
+        'products': latest_products,
+        'on_home_page': True,
+    }
 
     return render(request, 'django_shop_app/index.html', context)
 
@@ -67,3 +58,20 @@ def add_product(request):
     else:
         form = ProductForm()
     return render(request, 'django_shop_app/add_product.html', {'form': form})
+
+def category_products(request, category_id):
+    categories = Category.objects.all()
+    category_products = Product.objects.filter(category_id=category_id)
+    
+    context = {
+        'categories': categories,
+        'products': category_products,
+        'on_home_page': False,
+    }
+
+    return render(request, 'django_shop_app/index.html', context)
+
+def product_detail(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    categories = Category.objects.all()
+    return render(request, 'django_shop_app/product.html', {'product': product, 'categories': categories})
