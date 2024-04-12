@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
+from django.http import JsonResponse
 from .forms import CustomUserCreationForm, CategoryForm, ProductForm
 from .models import Product, Category
 
@@ -44,7 +45,7 @@ def add_category(request):
         form = CategoryForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('django_shop_app:index')
+            return redirect('django_shop_app:admin_panel')
     else:
         form = CategoryForm()
     return render(request, 'django_shop_app/add_category.html', {'form': form})
@@ -54,7 +55,7 @@ def add_product(request):
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('django_shop_app:index')
+            return redirect('django_shop_app:admin_panel')
     else:
         form = ProductForm()
     return render(request, 'django_shop_app/add_product.html', {'form': form})
@@ -75,3 +76,12 @@ def product_detail(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     categories = Category.objects.all()
     return render(request, 'django_shop_app/product.html', {'product': product, 'categories': categories})
+
+def admin_panel(request):
+    categories = Category.objects.all()
+
+    context = {
+        'categories': categories,
+    }
+
+    return render(request, 'django_shop_app/admin_panel.html', context)

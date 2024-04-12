@@ -22,10 +22,19 @@ class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ['name']
+        labels = {
+            'name': 'Nazwa kategorii',
+        }
 
 class ProductForm(forms.ModelForm):
-    category = forms.ModelChoiceField(queryset=Category.objects.all())
+    category = forms.ModelChoiceField(queryset=Category.objects.all(), label='Kategoria')
     
     class Meta:
         model = Product
         fields = ['category', 'name', 'description', 'price', 'image']
+        labels = {
+            'name': 'Nazwa produktu',
+            'description': 'Opis produktu',
+            'price': 'Cena',
+            'image': 'Obraz produktu',
+        }

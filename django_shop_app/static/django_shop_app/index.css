@@ -117,22 +117,6 @@ header {
     background-color: #000;
 }
 
-.login-links a,
-.admin-links a {
-    display: inline-block;
-    margin-right: 10px;
-    padding: 5px 10px;
-    background-color: #333;
-    color: #fff;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-}
-
-.login-links a:hover,
-.admin-links a:hover {
-    background-color: #000;
-}
-
 .product-grid {
     display: flex;
     flex-wrap: wrap;
@@ -170,11 +154,6 @@ header {
     padding: 3px 0;
     font-size: 14px;
     font-weight: 600;
-}
-
-.admin-links {
-    display: flex;
-    justify-content: center;
 }
 
 .products h2 {
@@ -259,4 +238,109 @@ header {
 .product-description p {
     color: #666;
     line-height: 1.5;
+}
+
+.admin-panel {
+    display: flex;
+    margin: 20px auto;
+    width: 1180px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.admin-options {
+    width: 35%;
+    padding: 20px;
+}
+
+.admin-options ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.admin-options button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.admin-options button:hover {
+    background-color: #000;
+}
+
+.admin-content {
+    width: 65%;
+    padding: 20px;
+}
+
+.admin-content label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.admin-content input[type="text"],
+.admin-content input[type="number"],
+.admin-content select {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.admin-content textarea {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.admin-content input[type="file"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.admin-content input[type="file"]::file-selector-button {
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.admin-content input[type="file"]::file-selector-button:hover {
+    background-color: #000;
+}
+
+.admin-content button[type="submit"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.admin-content button[type="submit"]:hover {
+    background-color: #000;
 }
