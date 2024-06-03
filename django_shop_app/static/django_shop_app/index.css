@@ -339,6 +339,7 @@ header {
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin: 5px 0;
 }
 
 .admin-content button[type="submit"]:hover {
@@ -387,10 +388,21 @@ header {
 }
 
 .cart-page .remove-button {
-    width: 0px;
     border: none;
 }
 
 .cart-page .remove-button img {
     width: 24px;
+}
+
+.product-list table {
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+}
+.product-list td, .product-list th {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
 }

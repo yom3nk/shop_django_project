@@ -7,9 +7,7 @@ Twój koszyk
 
 {% block content %}
 <div class="cart-page">
-    {% if empty_cart_message %}
-    <p>{{ empty_cart_message }}</p>
-    {% else %}
+    {% if cart_items %}
     <table>
         <tbody>
             {% for item in cart_items %}
@@ -35,7 +33,9 @@ Twój koszyk
             </tr>
         </tbody>
     </table>
-    <a href="{% url 'django_shop_app:checkout' %}" class="checkout-button">Przejdź do finalizacji zamówienia</a>    
+    <a href="{% url 'django_shop_app:checkout' %}" class="checkout-button">Przejdź do finalizacji zamówienia</a>
+    {% else %}
+    <p>Koszyk jest pusty.</p>
     {% endif %}
 </div>
 {% endblock %}

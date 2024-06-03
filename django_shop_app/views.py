@@ -87,6 +87,31 @@ def admin_panel(request):
 
     return render(request, 'django_shop_app/admin_panel.html', context)
 
+def product_list(request):
+    products = Product.objects.all()
+
+    context = {
+        'products': products,
+    }
+
+    return render(request, 'django_shop_app/product_list.html', context)
+
+def edit_product(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    if request.method == 'POST':
+        form = ProductForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('django_shop_app:admin_panel')
+    else:
+        form = ProductForm(instance=product)
+    return render(request, 'django_shop_app/edit_product.html', {'form': form, 'product': product})
+
+def delete_product(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    product.delete()
+    return redirect('django_shop_app:admin_panel')
+
 @login_required(login_url='/login/')
 def add_to_cart(request, product_id):
     user = request.user

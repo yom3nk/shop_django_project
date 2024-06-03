@@ -1,0 +1,40 @@
+{% block content %}
+<div class="product-list">
+    <table>
+        <thead>
+            <tr>
+                <th>Nazwa produktu</th>
+                <th>Kategoria</th>
+                <th>Cena</th>
+                <th>Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.price }}</td>
+                <td>
+                    <form method="post" action="{% url 'django_shop_app:delete_product' product.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Usuń</button>
+                    </form>
+                    <button type="submit" class="edit-product-btn" data-product-id="{{ product.id }}">Edytuj</button>
+                </td>                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+$(document).ready(function() {
+    $('.edit-product-btn').click(function() {
+        var productId = $(this).data('product-id');
+        $.get('/admin_panel/edit_product/' + productId + '/', function(data) {
+            $('.admin-content').html(data);
+        });
+    });
+});
+</script>
+{% endblock %}

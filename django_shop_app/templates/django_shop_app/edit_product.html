@@ -1,0 +1,9 @@
+{% block content %}
+<div class="edit-product">
+    <form method="post" action="/admin_panel/edit_product/{{ product.id }}/" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Zapisz zmiany</button>
+    </form>
+</div>
+{% endblock %}
