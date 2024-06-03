@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from .forms import CustomUserCreationForm, CategoryForm, ProductForm
-from .models import Product, Category
+from .models import Product, Category, Cart, CartItem
 
 def index(request):
     categories = Category.objects.all()
@@ -85,3 +86,46 @@ def admin_panel(request):
     }
 
     return render(request, 'django_shop_app/admin_panel.html', context)
+
+@login_required(login_url='/login/')
+def add_to_cart(request, product_id):
+    user = request.user
+    product = get_object_or_404(Product, pk=product_id)
+    quantity = int(request.POST.get('quantity', 1))
+
+    cart, created = Cart.objects.get_or_create(user=user)
+    cart_item, item_created = CartItem.objects.get_or_create(cart=cart, product=product)
+
+    if not item_created:
+        cart_item.quantity += quantity
+        cart_item.save()
+    else:
+        cart_item.quantity = quantity
+        cart_item.save()
+
+    return redirect('django_shop_app:cart')
+
+@login_required(login_url='/login/')
+def cart(request):
+    categories = Category.objects.all()
+
+    cart_items = CartItem.objects.filter(cart=request.user.cart)
+    total_price = 0
+    for item in cart_items:
+        item.total_price = item.quantity * item.product.price
+        total_price += item.total_price
+    
+    context = {
+        'cart_items': cart_items,
+        'total_price': total_price,
+        'categories': categories
+    }
+    return render(request, 'django_shop_app/cart.html', context)
+
+def remove_from_cart(request, product_id):
+    cart_item = CartItem.objects.get(cart=request.user.cart, product_id=product_id)
+    cart_item.delete()
+    return redirect('django_shop_app:cart')
+
+def checkout(request):
+    return render(request, 'django_shop_app/checkout.html')

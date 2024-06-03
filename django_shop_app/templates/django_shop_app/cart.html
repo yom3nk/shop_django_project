@@ -1,0 +1,41 @@
+{% extends 'django_shop_app/base.html' %}
+{% load static %}
+
+{% block title %}
+Twój koszyk
+{% endblock %}
+
+{% block content %}
+<div class="cart-page">
+    {% if empty_cart_message %}
+    <p>{{ empty_cart_message }}</p>
+    {% else %}
+    <table>
+        <tbody>
+            {% for item in cart_items %}
+            <tr>
+                <td>
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }} image">
+                </td>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.product.price }} PLN</td>
+                <td>{{ item.total_price }} PLN</td>
+                <td>
+                    <form method="post" action="{% url 'django_shop_app:remove_from_cart' item.product.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="remove-button"><img src="{% static '/django_shop_app/x.png' %}" alt="Usuń"></button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="4">Łącznie:</td>
+                <td>{{ total_price }} PLN</td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="{% url 'django_shop_app:checkout' %}" class="checkout-button">Przejdź do finalizacji zamówienia</a>    
+    {% endif %}
+</div>
+{% endblock %}
