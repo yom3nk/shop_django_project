@@ -1,0 +1,24 @@
+{% block content %}
+<div class="order-details">
+    <h2>Szczegóły zamówienia</h2>
+    <div class="order-info">
+        <p><strong>Numer zamówienia:</strong> {{ order.pk }}</p>
+        <p><strong>Data zamówienia:</strong> {{ order.created_at }}</p>
+        <p><strong>Imię:</strong> {{ order.first_name }}</p>
+        <p><strong>Nazwisko:</strong> {{ order.last_name }}</p>
+        <p><strong>Adres:</strong> {{ order.address }}</p>
+        <p><strong>Numer telefonu:</strong> {{ order.phone_number }}</p>
+    </div>
+    <div class="order-products">
+        <p><strong>Produkty:</strong></p>
+        <ul>
+            {% for order_item in order_items %}
+            <li>{{ order_item.product.name }} - {{ order_item.product.price }} PLN x {{ order_item.quantity }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="order-total">
+        <p><strong>Suma:</strong> {{ total_price }} PLN</p>
+    </div>
+</div>
+{% endblock %}

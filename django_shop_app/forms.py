@@ -38,3 +38,9 @@ class ProductForm(forms.ModelForm):
             'price': 'Cena',
             'image': 'Obraz produktu',
         }
+
+class CheckoutForm(forms.Form):
+    first_name = forms.CharField(label='Imię')
+    last_name = forms.CharField(label='Nazwisko')
+    address = forms.CharField(label='Adres', widget=forms.Textarea)
+    phone_number = forms.CharField(label='Numer telefonu')

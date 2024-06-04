@@ -17,12 +17,15 @@ urlpatterns = [
     path('add_to_cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
     path('remove_from_cart/<int:product_id>/', views.remove_from_cart, name='remove_from_cart'),
     path('checkout/', views.checkout, name='checkout'),
+    path('order_confirmation/', views.order_confirmation, name='order_confirmation'),
     path('admin_panel/', views.admin_panel, name='admin_panel'),
     path('admin_panel/add_category/', views.add_category, name='add_category'),
     path('admin_panel/add_product/', views.add_product, name='add_product'),
     path('admin_panel/product_list/', views.product_list, name='product_list'),
     path('admin_panel/edit_product/<int:product_id>/', views.edit_product, name='edit_product'),
     path('admin_panel/delete_product/<int:product_id>/', views.delete_product, name='delete_product'),
+    path('admin_panel/order_list/', views.order_list, name='order_list'),
+    path('admin_panel/order_details/<int:order_id>/', views.order_details, name='order_details'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

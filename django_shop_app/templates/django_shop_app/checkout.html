@@ -1,0 +1,16 @@
+{% extends 'django_shop_app/base.html' %}
+
+{% block title %}
+Finalizacja Zamówienia
+{% endblock %}
+
+{% block content %}
+<div class="checkout-page">
+    <h2>Finalizacja Zamówienia</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Złóż Zamówienie</button>
+    </form>
+</div>
+{% endblock %}

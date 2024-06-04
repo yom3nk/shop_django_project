@@ -277,7 +277,7 @@ header {
 }
 
 .admin-content {
-    width: 65%;
+    width: 100%;
     padding: 20px;
 }
 
@@ -399,10 +399,95 @@ header {
     width: 100%;
     text-align: left;
     border-collapse: collapse;
-    border: 1px solid #ddd;
 }
+
 .product-list td, .product-list th {
     padding: 8px;
     text-align: left;
     border-bottom: 1px solid #ddd;
+}
+
+.order-details {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.order-info {
+    margin-bottom: 20px;
+}
+
+.order-info p {
+    margin: 5px 0;
+}
+
+.order-products {
+    margin-bottom: 20px;
+}
+
+.order-products ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.order-products li {
+    margin-bottom: 10px;
+}
+
+.order-total {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+}
+
+.checkout-page {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.checkout-page h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.checkout-page form {
+    margin-bottom: 20px;
+}
+
+.checkout-page button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.checkout-page button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.checkout-page label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.checkout-page input[type="text"],
+.checkout-page input[type="email"],
+.checkout-page textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.checkout-page input[type="text"]:focus,
+.checkout-page input[type="email"]:focus,
+.checkout-page textarea:focus {
+    outline: none;
+    border-color: #007bff;
 }
