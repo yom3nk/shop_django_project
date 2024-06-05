@@ -12,6 +12,7 @@ Panel administratora
             <button id="add-product-btn">Dodaj produkt</button>
             <button id="add-product-list-btn">Lista produktów</button>
             <button id="order-list-btn">Lista zamówień</button>
+            <button id="change-password-btn">Zmiana hasła</button>
         </ul>
     </div>
     <div class="admin-content"></div>
@@ -29,6 +30,9 @@ $(document).ready(function() {
     });
     $('#order-list-btn').click(function() {
         $('.admin-content').load('/admin_panel/order_list/');
+    });
+    $('#change-password-btn').click(function() {
+        $('.admin-content').load('/change_password/');
     });
 });
 </script>

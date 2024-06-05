@@ -1,0 +1,27 @@
+{% extends 'django_shop_app/base.html' %}
+
+{% block title %}
+Panel użytkownika
+{% endblock %}
+
+{% block content %}
+<div class="admin-panel">
+    <div class="admin-options">
+        <ul>
+            <button id="order-list-btn">Moje zamówienia</button>
+            <button id="change-password-btn">Zmiana hasła</button>
+        </ul>
+    </div>
+    <div class="admin-content"></div>
+</div>
+<script>
+$(document).ready(function() {
+    $('#order-list-btn').click(function() {
+        $('.admin-content').load('/user_panel/user_orders/');
+    });
+    $('#change-password-btn').click(function() {
+        $('.admin-content').load('/change_password/');
+    });
+});
+</script>
+{% endblock %}

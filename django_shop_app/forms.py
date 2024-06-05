@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from .models import Category, Product
 
 class CustomUserCreationForm(UserCreationForm):   
@@ -44,3 +44,12 @@ class CheckoutForm(forms.Form):
     last_name = forms.CharField(label='Nazwisko')
     address = forms.CharField(label='Adres', widget=forms.Textarea)
     phone_number = forms.CharField(label='Numer telefonu')
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['old_password'].label = 'Stare hasło'
+        self.fields['new_password1'].label = 'Nowe hasło'
+        self.fields['new_password2'].label = 'Potwierdź nowe hasło'
+
+        self.fields['new_password1'].help_text = None

@@ -27,10 +27,12 @@
                 <div class="header-icons">
                     <a href="#" class="search-icon"><img src="{% static '/django_shop_app/search.png' %}" alt="Wyszukiwarka"></a>
                     <a href="/cart" class="cart-icon"><img src="{% static '/django_shop_app/shopping-cart.png' %}" alt="Koszyk"></a>
-                    {% if user.is_authenticated and user.is_superuser %}
-                    <a href="/admin_panel" class="admin-icon"><img src="{% static '/django_shop_app/admin.png' %}" alt="Admin"></a>
-                    {% endif %}
                     {% if user.is_authenticated %}
+                        {% if user.is_superuser %}
+                            <a href="/admin_panel" class="admin-icon"><img src="{% static '/django_shop_app/admin.png' %}" alt="Admin"></a>
+                        {% else %}
+                            <a href="/user_panel" class="admin-icon"><img src="{% static '/django_shop_app/user.png' %}" alt="User"></a>
+                        {% endif %}
                         <a href="/logout" class="user-icon"><img src="{% static '/django_shop_app/logout.png' %}" alt="Wyloguj"></a>
                     {% else %}
                         <a href="/login" class="user-icon"><img src="{% static '/django_shop_app/login.png' %}" alt="Zaloguj"></a>
@@ -42,7 +44,7 @@
                         <span>{{ user.username }}</span>
                     </div>
                 {% endif %}
-            </div>
+            </div>            
         </div>
     </header>
     <div class="container">

@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
-from .forms import CustomUserCreationForm, CategoryForm, ProductForm, CheckoutForm
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from .forms import CustomUserCreationForm, CategoryForm, ProductForm, CheckoutForm, CustomPasswordChangeForm
 from .models import Product, Category, Cart, CartItem, Order, OrderItem
 
 def index(request):
@@ -17,6 +19,8 @@ def index(request):
     return render(request, 'django_shop_app/index.html', context)
 
 def login_view(request):
+    categories = Category.objects.all()
+
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -24,9 +28,11 @@ def login_view(request):
         if user is not None:
             login(request, user)
             return redirect('django_shop_app:index')
-    return render(request, 'django_shop_app/login.html')
+    return render(request, 'django_shop_app/login.html', {'categories': categories})
 
 def register_view(request):
+    categories = Category.objects.all()
+
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
@@ -34,7 +40,7 @@ def register_view(request):
             return redirect('django_shop_app:index')
     else:
         form = CustomUserCreationForm()
-    return render(request, 'django_shop_app/register.html', {'form': form})
+    return render(request, 'django_shop_app/register.html', {'form': form, 'categories': categories})
 
 def custom_logout(request):
     logout(request)
@@ -133,7 +139,13 @@ def add_to_cart(request, product_id):
 def cart(request):
     categories = Category.objects.all()
 
-    cart_items = CartItem.objects.filter(cart=request.user.cart)
+    try:
+        cart = request.user.cart
+        cart_items = CartItem.objects.filter(cart=cart)
+    except Cart.DoesNotExist:
+        cart = Cart.objects.create(user=request.user)
+        cart_items = []
+
     total_price = 0
     for item in cart_items:
         item.total_price = item.quantity * item.product.price
@@ -145,6 +157,7 @@ def cart(request):
         'categories': categories
     }
     return render(request, 'django_shop_app/cart.html', context)
+
 
 def remove_from_cart(request, product_id):
     cart_item = CartItem.objects.get(cart=request.user.cart, product_id=product_id)
@@ -209,3 +222,38 @@ def order_details(request, order_id):
 
     context = {'order': order, 'order_items': order_items, 'total_price': total_price}
     return render(request, 'django_shop_app/order_details.html', context)
+
+def user_panel(request):
+    categories = Category.objects.all()
+
+    context = {
+        'categories': categories,
+    }
+
+    return render(request, 'django_shop_app/user_panel.html', context)
+
+@login_required(login_url='/login/')
+def user_orders(request):
+    orders = Order.objects.filter(user=request.user)
+
+    for order in orders:
+        total_price = 0
+        order_items = order.orderitem_set.all()  # Zwraca wszystkie elementy zamówienia dla danego zamówienia
+        for order_item in order_items:
+            total_price += order_item.quantity * order_item.product.price
+
+        order.total_price = total_price  # Dodajemy pole total_price do każdego zamówienia
+
+    return render(request, 'django_shop_app/user_orders.html', {'orders': orders})
+
+
+def change_password(request):
+    if request.method == 'POST':
+        form = CustomPasswordChangeForm(request.user, request.POST)  # Użyj niestandardowej klasy formularza
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            return redirect('django_shop_app:index')
+    else:
+        form = CustomPasswordChangeForm(request.user)
+    return render(request, 'django_shop_app/change_password.html', {'form': form})

@@ -26,6 +26,9 @@ urlpatterns = [
     path('admin_panel/delete_product/<int:product_id>/', views.delete_product, name='delete_product'),
     path('admin_panel/order_list/', views.order_list, name='order_list'),
     path('admin_panel/order_details/<int:order_id>/', views.order_details, name='order_details'),
+    path('user_panel/', views.user_panel, name='user_panel'),
+    path('user_panel/user_orders/', views.user_orders, name='user_orders'),
+    path('change_password/', views.change_password, name='change_password'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

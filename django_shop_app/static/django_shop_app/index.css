@@ -289,6 +289,7 @@ header {
 
 .admin-content input[type="text"],
 .admin-content input[type="number"],
+.admin-content input[type="password"],
 .admin-content select {
     width: calc(100% - 22px);
     padding: 10px;
@@ -490,4 +491,49 @@ header {
 .checkout-page textarea:focus {
     outline: none;
     border-color: #007bff;
+}
+
+.auth-page {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.auth-page h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.auth-page form {
+    margin-bottom: 20px;
+}
+
+.auth-page label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.auth-page input[type="text"],
+.auth-page input[type="email"],
+.auth-page input[type="password"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.auth-page button[type="submit"] {
+    width: 110px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
+
+.auth-page button[type="submit"]:hover {
+    background-color: #0056b3;
 }

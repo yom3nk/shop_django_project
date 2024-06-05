@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logowanie</title>
-</head>
-<body>
+{% extends 'django_shop_app/base.html' %}
+
+{% block title %}
+Logowanie
+{% endblock %}
+
+{% block content %}
+<div class="auth-page">
     <h2>Logowanie</h2>
     <form method="post">
         {% csrf_token %}
@@ -19,6 +19,8 @@
         </div>
         <button type="submit">Zaloguj</button>
     </form>
-    <a href="/register">Zarejestruj się</a>
-</body>
-</html>
+    <form method="get" action="/register">
+        <button type="submit">Zarejestruj się</button>
+    </form>
+</div>
+{% endblock %}
