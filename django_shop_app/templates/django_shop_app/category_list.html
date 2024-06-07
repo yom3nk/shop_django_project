@@ -1,0 +1,26 @@
+{% block content %}
+<div class="product-list">
+    <table>
+        <thead>
+            <tr>
+                <th>Nazwa kategorii</th>
+                <th>Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+            <tr>
+                <td>{{ category.name }}</td>
+                <td>
+                    <form method="post" action="{% url 'django_shop_app:delete_category' category.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Usuń</button>
+                    </form>
+                </td>                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+{% endblock %}

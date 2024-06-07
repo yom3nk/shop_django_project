@@ -92,6 +92,16 @@ def admin_panel(request):
 
     return render(request, 'django_shop_app/admin_panel.html', context)
 
+def category_list(request):
+    categories = Category.objects.all()
+    return render(request, 'django_shop_app/category_list.html', {'categories': categories})
+
+def delete_category(request, category_id):
+    if request.method == 'POST':
+        category = Category.objects.get(pk=category_id)
+        category.delete()
+    return redirect('django_shop_app:admin_panel')
+
 def product_list(request):
     products = Product.objects.all()
 
